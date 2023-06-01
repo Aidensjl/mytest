@@ -1,0 +1,5 @@
+/home/aiden/git_learning/data_struct/mytest/SpeechContest/build/CMakeFiles/rebuild_cache.dir
+/home/aiden/git_learning/data_struct/mytest/SpeechContest/build/CMakeFiles/edit_cache.dir
+/home/aiden/git_learning/data_struct/mytest/SpeechContest/build/src/CMakeFiles/rebuild_cache.dir
+/home/aiden/git_learning/data_struct/mytest/SpeechContest/build/src/CMakeFiles/edit_cache.dir
+/home/aiden/git_learning/data_struct/mytest/SpeechContest/build/src/CMakeFiles/main.dir
