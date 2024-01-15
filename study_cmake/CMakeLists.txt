@@ -51,6 +51,7 @@ MESSAGE("OPENCV VERSION:${OpenCV_VERSION}")
 # 包含的头文件路径
 include_directories(
     ${PROJECT_SOURCE_DIR}/include
+    
 )
 
 # 设置输出lib库路径，下面是最新用法，类似之前的LIBRARY_OUTPUT_PATH
@@ -69,6 +70,10 @@ add_executable(myapp
 )
 
 # 链接可执行程序
+# 当你使用 target_link_libraries(my_executable ${OpenCV_LIBS}) 时，
+# CMake 会自动将 ${OpenCV_INCLUDE_DIRS} 中的路径添加到编译过程中
+# 使得你在源代码中可以直接使用OpenCV的头文件
+# 无需手动指定路径使用 include_directories(${OpenCV_INCLUDE_DIRS}) 进行设置。
 # target_link_libraries(myapp ${PROJECT_SOURCE_DIR}/lib/libmyfunc.so)
-target_link_libraries(myapp myfunc)
+target_link_libraries(myapp myfunc ${OpenCV_LIBS})
 
