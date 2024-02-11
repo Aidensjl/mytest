@@ -77,3 +77,6 @@ add_executable(myapp
 # target_link_libraries(myapp ${PROJECT_SOURCE_DIR}/lib/libmyfunc.so)
 target_link_libraries(myapp myfunc ${OpenCV_LIBS})
 
+# 如果是windows下的Win + CMake + MinGW
+# file(GLOB libdir "D:/mingw64/x86_64-w64-mingw32/lib/*.a")，全局文件的查找，筛选后缀为.a的文件
+# cmake ..  -G "MinGW Makefiles"
