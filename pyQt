@@ -1,0 +1,373 @@
+# 这是一个小例子
+import subprocess
+import psutil
+import sys, os
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
+from PIL import Image
+import os
+
+
+class single(QWidget):
+    def __init__(self,parent = None):
+        super().__init__(parent)
+        self.setFixedSize(400,200)
+        self.command = ""
+        self.inputdir = ""
+        self.outputdir = ""
+        
+        # 垂直布局（总布局）
+        v = QVBoxLayout(self)
+        # 间距
+        v.setSpacing(10)
+        # 边缘间距
+        v.setContentsMargins(5,15,5,5)
+
+        # 水平布局
+        h = QHBoxLayout()
+        h.setContentsMargins(15,5,15,5)
+        # 将水平布局放入垂直布局中
+        v.addItem(h)
+
+        # 创建按钮
+        self.singleFocusOption = QRadioButton("单镜头", self)
+        self.singleFiveOption = QRadioButton("5镜头", self)
+
+        # 将按钮放入水平布局中
+        h.addStretch()
+        h.addWidget(self.singleFocusOption)
+        h.addWidget(self.singleFiveOption)
+        h.addStretch()
+
+
+        
+
+
+
+
+
+        # # 创建表单布局
+        # form = QFormLayout()
+        # # 将表单布局放入垂直布局中
+        # v.addItem(form)
+        # form.setSpacing(20)
+        # form.setContentsMargins(15,5,15,5)
+        # self.inDir = QLineEdit(self)
+        # self.outDir = QLineEdit(self)
+        # # 一行一行加入表单
+        # form.addRow(QLabel("指定输入目录",self), self.inDir)
+        # form.addRow(QLabel("指定输出目录",self), self.outDir)
+
+
+        # self.inDir.textEdited.connect(self.input)
+        # self.outDir.textEdited.connect(self.output)
+
+
+
+
+        Myindir = QHBoxLayout()
+        v.addItem(Myindir)
+        Myindir.setSpacing(20)
+        Myindir.setContentsMargins(15,5,15,5)
+        self.inDir = QPushButton("输入目录",self)
+        Myindir.addWidget(self.inDir)
+        self.inDir.clicked.connect(self.input)
+        # 文本
+        self.intext = QLineEdit(self)
+        Myindir.addWidget(self.intext)
+
+        
+        Myoutdir = QHBoxLayout()
+        v.addItem(Myoutdir)
+        Myoutdir.setSpacing(20)
+        Myoutdir.setContentsMargins(15,5,15,5)
+        self.outDir = QPushButton("输出目录",self)
+        Myoutdir.addWidget(self.outDir)
+        self.outDir.clicked.connect(self.output)
+        # 文本
+        self.outtext = QLineEdit(self)
+        Myoutdir.addWidget(self.outtext)
+        # 水平布局
+        h2 = QHBoxLayout()
+        # 将水平布局放入垂直布局中
+        v.addItem(h2)
+        self.check = QCheckBox("续传",self)
+        h2.addStretch()
+        h2.addWidget(self.check)
+        h2.addStretch()
+        
+        # 水平布局
+        h3 = QHBoxLayout()
+        # 将水平布局放入垂直布局中
+        v.addItem(h3)
+
+        self.startButton = QPushButton("开始", self)
+        self.endButton = QPushButton("结束", self)
+
+        h3.addStretch()
+        h3.addWidget(self.startButton)
+        h3.addWidget(self.endButton)
+        h3.addStretch()
+        v.addStretch()
+
+        self.startButton.clicked.connect(self.startRun)
+        self.endButton.clicked.connect(self.endRun)
+
+        # self.process = None
+        self.process = QProcess()
+
+
+    def startRun(self):
+        command = "D:\\desktop\\Monitor.exe"
+        arguments = ["-i", self.inputdir, "-o", self.outputdir, "-1"]
+        self.process.start(command, arguments)
+
+    def endRun(self):
+        self.process.kill()
+
+    def input(self):
+        directory = QFileDialog.getExistingDirectory(self, "选择输入目录")
+        self.intext.setText(directory)
+        self.inputdir = directory
+
+    def output(self):
+        directory = QFileDialog.getExistingDirectory(self, "选择输出目录")
+        self.outtext.setText(directory)
+        self.outputdir = directory
+
+
+class five(QWidget):
+    def __init__(self, parent = None):
+        super().__init__(parent)
+        self.setFixedSize(400,200)
+        self.command = ""
+        self.inputdir = ""
+        self.outputdir = ""
+        
+        # 垂直布局（总布局）
+        v = QVBoxLayout(self)
+        # 间距
+        v.setSpacing(10)
+        # 边缘间距
+        v.setContentsMargins(5,15,5,5)
+
+        # # 创建表单布局
+        # form = QFormLayout()
+        # # 将表单布局放入垂直布局中
+        # v.addItem(form)
+        # form.setSpacing(20)
+        # form.setContentsMargins(15,5,15,5)
+        # self.inDir = QLineEdit(self)
+        # self.outDir = QLineEdit(self)
+        # # 一行一行加入表单
+        # form.addRow(QLabel("指定输入目录",self), self.inDir)
+        # form.addRow(QLabel("指定输出目录",self), self.outDir)
+
+
+        # self.inDir.textEdited.connect(self.input)
+        # self.outDir.textEdited.connect(self.output)
+
+        Myindir = QHBoxLayout()
+        v.addItem(Myindir)
+        Myindir.setSpacing(20)
+        Myindir.setContentsMargins(15,5,15,5)
+        self.inDir = QPushButton("输入目录",self)
+        Myindir.addWidget(self.inDir)
+        self.inDir.clicked.connect(self.input)
+        # 文本
+        self.intext = QLineEdit(self)
+        Myindir.addWidget(self.intext)
+
+        
+        Myoutdir = QHBoxLayout()
+        v.addItem(Myoutdir)
+        Myoutdir.setSpacing(20)
+        Myoutdir.setContentsMargins(15,5,15,5)
+        self.outDir = QPushButton("输出目录",self)
+        Myoutdir.addWidget(self.outDir)
+        self.outDir.clicked.connect(self.output)
+        # 文本
+        self.outtext = QLineEdit(self)
+        Myoutdir.addWidget(self.outtext)
+        # 水平布局
+        h2 = QHBoxLayout()
+        # 将水平布局放入垂直布局中
+        v.addItem(h2)
+        self.check = QCheckBox("续传",self)
+        h2.addStretch()
+        h2.addWidget(self.check)
+        h2.addStretch()
+        
+        # 水平布局
+        h3 = QHBoxLayout()
+        # 将水平布局放入垂直布局中
+        v.addItem(h3)
+
+        self.startButton = QPushButton("开始", self)
+        self.endButton = QPushButton("结束", self)
+
+        h3.addStretch()
+        h3.addWidget(self.startButton)
+        h3.addWidget(self.endButton)
+        h3.addStretch()
+        v.addStretch()
+
+        self.startButton.clicked.connect(self.startRun)
+        self.endButton.clicked.connect(self.endRun)
+
+        # self.process = None
+        self.process = QProcess()
+
+
+    # def startRun(self):
+    #     self.command = f"D:\\desktop\\Monitor.exe -i {self.inputdir} -o {self.outputdir} -1"
+    #     self.process = subprocess.Popen(self.command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+
+    # def endRun(self):   
+    #     if self.process is not None:
+    #         self.process.terminate()
+    #         output, error = self.process.communicate()
+    #         if output:
+    #             print("命令行输出:", output.decode("utf-8"))
+    #         if error:
+    #             print("错误信息:", error.decode("utf-8"))
+
+    def startRun(self):
+        command = "D:\\desktop\\Monitor.exe"
+        arguments = ["-i", self.inputdir, "-o", self.outputdir, "-1"]
+        self.process.start(command, arguments)
+
+    def endRun(self):
+        print("sss")
+        self.process.kill()
+        print("sss")
+
+
+    def input(self):
+        directory = QFileDialog.getExistingDirectory(self, "选择输入目录")
+        self.intext.setText(directory)
+        self.inputdir = directory
+
+    def output(self):
+        directory = QFileDialog.getExistingDirectory(self, "选择输出目录")
+        self.outtext.setText(directory)
+        self.outputdir = directory
+
+
+class MainWindow(QTabWidget):
+    def __init__(self):
+        super().__init__()
+        # self.setFixedSize(300,100)
+
+        self.five = five(self)
+        self.single = single(self)
+
+        self.addTab(self.single,"单镜头")
+        self.addTab(self.five,"5镜头")
+
+        self.setCurrentIndex(0)
+
+#D:\python\python.exe D:\desktop\shu\monitor\view\test.py
+
+
+
+
+if __name__ == "__main__":
+    # 打开图片文件
+    img = Image.open(r'C:\Users\Aiden\Desktop\workspaces\750x400.jpg')
+
+    # 设置目标文件大小（单位：KB）
+    target_size_kb = 80
+
+    # 逐步降低图像质量，直到达到目标文件大小
+    quality = 85  # 初始质量
+    while True:
+        img.save(r'C:\\Users\\Aiden\\Desktop\\workspaces\\output_image.jpg', optimize=True, quality=quality)
+        file_size_kb = os.path.getsize(r'C:\\Users\\Aiden\\Desktop\\workspaces\\output_image.jpg') / 1024  # 获取文件大小（KB）
+        if file_size_kb <= target_size_kb:
+            break
+        quality -= 5  # 递减质量
+    
+    # app = QApplication(sys.argv)
+    # window = MainWindow()
+    # window.show()
+    # sys.exit(app.exec_())
+
+
+
+
+================================================================================
+import subprocess
+import psutil
+import sys, os
+
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
+
+class MainWindow(QWidget):
+
+    def __init__(self) -> None:
+        # 继承父类QWidget
+        super().__init__()
+        # 固定窗口大小
+        # self.setFixedSize(400,200)
+        self.initUI()
+
+        # 创建垂直布局
+        v = QVBoxLayout()
+        # 间距
+        v.setSpacing(10)
+        # 边缘间距
+        v.setContentsMargins(5,15,5,5)
+
+        # 水平布局
+        h = QHBoxLayout()
+        h.setContentsMargins(15,5,15,5)
+        # 将水平布局放入垂直布局中
+        v.addItem(h)
+
+    def initUI(self):
+        # 设置图标
+        img_path = "./include/test.jpg"
+        pixmap = QPixmap(img_path)
+        self.setWindowIcon(QIcon(pixmap))
+
+        self.setWindowTitle("MyApp")
+        self.setGeometry(100, 100, 800, 600)
+        # 设置背景颜色
+        self.setStyleSheet("background-color: pink;")
+
+        # 设置背景图
+        label = QLabel(self)
+        label.setPixmap(pixmap)
+        label.setGeometry(0,0,pixmap.width(),pixmap.height())
+        # 设置缩放
+        label.setScaledContents(True)
+        label.setAlignment(Qt.AlignCenter)
+
+        # 设置窗口大小策略，使得窗口可以根据背景图的大小进行调整，不能小于图片
+        label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        # 设置QLabel的布局
+        layout = QVBoxLayout(self)
+        layout.addWidget(label)
+  
+
+
+
+
+
+
+
+if __name__ == "__main__":
+    # 创建应用程序类，sys.argv是一个包含命令行参数的列表
+    app = QApplication(sys.argv)
+    # app.setApplicationName("MyApp")
+    # image_path = "./include/test.jpg"
+    # pixmap = QPixmap(image_path)
+    # app.setWindowIcon(QIcon(pixmap))
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec_())
